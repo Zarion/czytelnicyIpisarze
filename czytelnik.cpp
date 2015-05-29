@@ -1,6 +1,6 @@
 #include "czytelnik.h"
 
-#define CZAS_CZYTANIA 15000
+#define CZAS_CZYTANIA 2000
 #define KONIEC_CIERPLIWOSCI 60000
 
 Czytelnik::Czytelnik(int id)
@@ -124,9 +124,9 @@ void Czytelnik::slot_stoppedDoNothing()
         }
     }
 
-    if (!this->czyta)
+    if (this->czyta)
     {
-        qDebug() << QString("Czytelnik ") + QString::number(this->id) + QString(" zaczyna czytać książkę o tytule ") + QString::number(this->ksiazka) + QString("o treści ") + QString::number(this->zawartosc);
+        qDebug() << QString("Czytelnik ") + QString::number(this->id) + QString(" zaczyna czytać książkę o tytule ") + QString::number(this->ksiazka) + QString(" o treści ") + QString::number(this->zawartosc);
         QTest::qSleep(CZAS_CZYTANIA);
         emit stoppedReading();
     }
