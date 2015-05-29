@@ -3,18 +3,13 @@
 #define CZAS_PISANIA 15000
 #define KONIEC_CIERPLIWOSCI 60000
 
-Pisarz::Pisarz()
+Pisarz::Pisarz(int id)
 {
     this->chcePisac = false;
     this->pisze = false;
     this->nowaZawartosc = 0;
     this->staraZawartosc = 0;
     this->ksiazka = 0;
-}
-
-Pisarz::Pisarz(int id)
-{
-    Pisarz();
     this->id = id;
 }
 
@@ -121,18 +116,19 @@ void Pisarz::slot_stoppedDoNothing()
     qDebug() << QString("Pisarz ") + QString::number(this->id) + QString(" chce pisać.");
     int currentTime = getCurrentTimeInSeconds();
 
-    while (this->pisze)
+    while (!this->pisze)
     {
         if (getCurrentTimeInSeconds() - currentTime < KONIEC_CIERPLIWOSCI)
             emit meWantsWrite(this);
         else
         {
+            qDebug() << "CHCE UMRZEC";
             emit boredToDeath();
             break;
         }
     }
 
-    if (!this->pisze)
+    if (this->pisze)
     {
         qDebug() << QString("Pisarz ") + QString::number(this->id) + QString(" zmienia zawartość książki ") + QString::number(this->ksiazka) + QString("o zawartości ") + QString::number(this->staraZawartosc) + QString(" na nową zawartość ") + QString::number(this->nowaZawartosc);
         QTest::qSleep(CZAS_PISANIA);
@@ -142,6 +138,7 @@ void Pisarz::slot_stoppedDoNothing()
 
 void Pisarz::slot_stoppedWriting()
 {
+    this->pisze = false;
     this->chcePisac = false;
     this->nowaZawartosc = 0;
     this->staraZawartosc;

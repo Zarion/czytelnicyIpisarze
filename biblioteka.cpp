@@ -39,11 +39,13 @@ void Biblioteka::setPisarze(int value)
 void Biblioteka::slot_freeSlotCzytelnik()
 {
     this->czytelnicy -= 1;
+    emit showCzytelnicy();
 }
 
 void Biblioteka::slot_freeSlotPisarz()
 {
     this->pisarze = 0;
+    emit showPisarze();
 }
 
 void Biblioteka::slot_requestedSlotByPisarz(Pisarz *pisarz)
@@ -65,8 +67,12 @@ void Biblioteka::requestSlotByCzytelnik(Czytelnik *czytelnik)
         czytelnik->setKsiazka(book+1);
         int wartosc = (*this->listaKsiazek)[book];
         czytelnik->setZawartosc(wartosc);
+        emit showCzytelnicy();
     }
 }
+
+
+
 
 void Biblioteka::requestSlotByPisarz(Pisarz *pisarz)
 {
@@ -82,6 +88,8 @@ void Biblioteka::requestSlotByPisarz(Pisarz *pisarz)
         qsrand(now);
         wartosc = qrand() % (this->listaKsiazek->size()*10);
         (*this->listaKsiazek)[book] = wartosc;
+        emit showPisarze();
+
     }
 }
 

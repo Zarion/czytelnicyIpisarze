@@ -23,6 +23,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+public slots:
+    void slot_showCzytelicy();
+    void slot_showPisarze();
 };
 
 #endif // MAINWINDOW_H

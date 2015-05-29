@@ -12,8 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     listaPisarzy = new QList<Pisarz*>();
 
     biblioteka = new Biblioteka(lKsiazek);
-
-    qDebug() << biblioteka->getPisarze();
+    QObject::connect(biblioteka, SIGNAL(showCzytelnicy()), this, SLOT(slot_showCzytelicy()), Qt::DirectConnection);
+    QObject::connect(biblioteka, SIGNAL(showPisarze()), this, SLOT(slot_showPisarze()), Qt::DirectConnection);
 
     for (int i = 0 ; i < lPisarzy ; i++ ){
         Pisarz *pisarz = new Pisarz(i+1);
@@ -41,7 +41,6 @@ MainWindow::MainWindow(QWidget *parent) :
         QObject::connect(czytelnik, SIGNAL(meWantsRead(Czytelnik*)), biblioteka, SLOT(slot_requestedSlotByCzytelnik(Czytelnik*)), Qt::DirectConnection);
     }
 
-    qDebug() << biblioteka->getPisarze();
 
     for ( int i = 0 ; i < listaCzytelnikow->size() ; i++ ){
         (*listaCzytelnikow)[i]->startThread();
@@ -54,7 +53,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 }
 
-
 MainWindow::~MainWindow()
 {
     delete biblioteka;
@@ -64,4 +62,12 @@ MainWindow::~MainWindow()
     delete listaCzytelnikow;
     delete listaPisarzy;
     delete ui;
+}
+
+void MainWindow::slot_showCzytelicy(){
+    ui->label->setText( QString::number(biblioteka->getCzytelnicy()));
+}
+
+void MainWindow::slot_showPisarze(){
+     ui->label_2->setText( QString::number(biblioteka->getPisarze()));
 }

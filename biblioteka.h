@@ -8,12 +8,15 @@
 #include <QList>
 #include <QDebug>
 
+namespace Ui
+{
+    class Biblioteka;
+}
 
 class Biblioteka : public QObject
 {
     Q_OBJECT
 public:
-    Biblioteka();
     Biblioteka(int liczbaKsiazek);
     ~Biblioteka();
     int getCzytelnicy() const;
@@ -32,6 +35,10 @@ private:
     int pisarze;
 
     int randomBook(int id);
+
+signals:
+    void showPisarze();
+    void showCzytelnicy();
 
 public slots:
     void slot_freeSlotCzytelnik();

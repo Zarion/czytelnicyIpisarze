@@ -10,7 +10,6 @@ class Pisarz : public QObject
 {
      Q_OBJECT
 public:
-    Pisarz();
     Pisarz(int id);
     ~Pisarz();
 
