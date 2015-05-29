@@ -27,7 +27,7 @@ public:
     void requestSlotByCzytelnik(Czytelnik *czytelnik);
 
 private:
-    QList<int> listaKsiazek;
+    QList<int> *listaKsiazek;
     int czytelnicy;
     int pisarze;
 

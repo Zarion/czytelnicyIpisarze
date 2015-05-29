@@ -3,17 +3,12 @@
 #define CZAS_CZYTANIA 15000
 #define KONIEC_CIERPLIWOSCI 60000
 
-Czytelnik::Czytelnik()
+Czytelnik::Czytelnik(int id)
 {
     this->chceCzytac = false;
     this->czyta = false;
     this->zawartosc = 0;
     this->ksiazka = 0;
-}
-
-Czytelnik::Czytelnik(int id)
-{
-    Czytelnik();
     this->id = id;
 }
 
@@ -118,7 +113,7 @@ void Czytelnik::slot_stoppedDoNothing()
     qDebug() << QString("Czytelnik ") + QString::number(this->id) + QString(" chce czytać.");
     int currentTime = getCurrentTimeInSeconds();
 
-    while (this->czyta)
+    while (!this->czyta)
     {
         if (getCurrentTimeInSeconds() - currentTime < KONIEC_CIERPLIWOSCI)
             emit meWantsRead(this);
@@ -142,6 +137,7 @@ void Czytelnik::slot_stoppedReading()
     this->chceCzytac = false;
     this->zawartosc = 0;
     this->ksiazka = 0;
+    this->czyta = false;
     emit freeSlot();
     emit startDoNothingAgain();
 }

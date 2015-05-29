@@ -17,8 +17,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     Biblioteka *biblioteka;
-    QList<Pisarz*> listaPisarzy;
-    QList<Czytelnik*> listaCzytelnikow;
+    QList<Pisarz*> *listaPisarzy;
+    QList<Czytelnik*> *listaCzytelnikow;
     ~MainWindow();
 
 private:
